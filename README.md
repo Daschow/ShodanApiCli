@@ -26,3 +26,9 @@ Then, you need a .env file which will have our personal data like API_KEY from S
 PORT=XXXX
 API_KEY=YOUR_API_KEY
 ```
+
+Finally, when you want to run this project you have to :
+
+```npm
+npm start
+```
