@@ -1,18 +1,19 @@
 
 import express from 'express';
 import dotenv from 'dotenv';
-import { fetchFromShodan } from './utils/utils';
+import helmet from 'helmet';
+import { register } from './bin/routes';
 
-const privateEnv = dotenv.config().parsed;
+dotenv.config();
 const app = express();
-app.listen(privateEnv.PORT);
 
+app.use(helmet());
+app.disable('x-powered-by');
+app.use(express.urlencoded({ extended: true }));
 
+app.listen(process.env.PORT, () => {
+    // tslint:disable-next-line:no-console
+    console.log(`Server started at http://localhost:${process.env.PORT}`);
+});
 
-app.get('/shodanRequestsshPort', async (req, res) => {
-  await fetchFromShodan(res,22,"sshResultFile.json");
-})
-
-app.get('/shodanRequesthttpPort', async (req, res) => {
-  await fetchFromShodan(res,22,"sshResultFile.json");
-})
+register(app);
